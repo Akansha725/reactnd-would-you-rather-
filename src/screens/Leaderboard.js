@@ -2,6 +2,7 @@ import React from 'react';
 import 'antd/dist/antd.css';
 import { Card, Avatar, Divider, Badge } from 'antd';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom'
 
 import { orderBy } from 'lodash';
 
@@ -37,11 +38,12 @@ class Leaderboard extends React.Component {
   render() {
 
     let { users, isLoading } = this.state;
+    let { currentUser } = this.props;
 
     return (
       <div>
 
-      { isLoading && users.map( (user, index) => (
+      { isLoading && currentUser !== null && users.map( (user, index) => (
         <Card key={index}
           style={{ width: '80%', margin: 20, textAlign: 'left' }}
           headStyle={{backgroundColor: 'lightgray', flex: 1}}>
@@ -71,6 +73,9 @@ class Leaderboard extends React.Component {
             </Card.Grid>
         </Card>
        ))
+      }
+      { isLoading && currentUser === null &&
+        <Redirect to="/login" />
       }
      </div>
 

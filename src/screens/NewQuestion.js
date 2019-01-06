@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Input, Divider, Button } from 'antd';
 import { connect } from 'react-redux';
 import 'antd/dist/antd.css';
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 import { loadUser, saveQuestion } from '../actions';
 
@@ -36,9 +36,12 @@ class NewQuestion extends React.Component {
 
   render() {
     let { optionA, optionB } = this.state;
+    let { currentUser } = this.props;
 
     return (
-      <Card
+      <div>
+      { currentUser !== null &&
+        <Card
         style={{ width: '70%', margin: 80, textAlign: 'center'}}
         type="inner"
         title="Create New Question">
@@ -69,6 +72,11 @@ class NewQuestion extends React.Component {
             </Link>
         </Card.Grid>
       </Card>
+      }
+      { currentUser === null &&
+        <Redirect to="/login" />
+      }
+      </div>
     );
   }
 }

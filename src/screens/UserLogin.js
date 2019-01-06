@@ -23,6 +23,14 @@ class UserLogin extends React.Component {
     this.props.setCurrentUser(user);
   }
 
+  static getDerivedStateFromProps(props, state){
+
+      if(props.location.state && props.location.state.referrer === "logout"){
+         props.setCurrentUser(null);
+      }
+      return null;
+  }
+
   render() {
 
     let { users } = this.state;

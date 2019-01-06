@@ -29,7 +29,6 @@ export default function App() {
                       <Route exact path="/leaderboard" component={Leaderboard}/>
                       <Route exact path="/questions/:question_id" component={ShowPoll}/>
                       <Route exact path="/error" component={ErrorScreen}/>
-                      <Route exact path="/logout" component={UserLogin}/>
                     </Header>
                   </Switch>
                 </Router>

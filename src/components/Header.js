@@ -9,13 +9,17 @@ import { loadUser, loadUsers } from '../actions';
 class Header extends React.Component {
   state = {
     users: {},
-    current: 'login'
+    current: 'login',
+    currentLocation: ''
   }
 
   componentDidMount(){
     this.props.getCurrentUser();
     this.props.getUsers().then(response => {
-      this.setState({ users: response.users });
+      this.setState({
+         users: response.users,
+         currentLocation: this.props.location.pathname
+        });
     });
   }
 
@@ -27,7 +31,7 @@ class Header extends React.Component {
 
   render() {
 
-    let { current, users } = this.state;
+    let { current, users, currentLocation } = this.state;
     const { currentUser, children } = this.props;
 
     return (
@@ -49,13 +53,13 @@ class Header extends React.Component {
                      New Question
                       { (currentUser === null)? (
                           <Link to="/login"/>
-                        ): (<Link to="/new_question"/>)
+                        ): (<Link to="/add"/>)
                       }
                   </Menu.Item>
                   <Menu.Item key="leaderboard">
                     Leaderboard
                      { currentUser === null ? (
-                         <Link to="/login"  key="from_leaderboard"/>
+                         <Link to="/login" />
                        ): (<Link to="/leaderboard"/>)
                      }
                   </Menu.Item>
@@ -72,12 +76,22 @@ class Header extends React.Component {
                   }
                   { currentUser &&
                       <Menu.Item key="logOut">
-                        <Link to="/login">Logout</Link>
+                        <Link to={{
+                              pathname: "/login",
+                              search: "",
+                              hash: "",
+                              state: { referrer: "logout" }
+                            }}>Logout</Link>
                       </Menu.Item>
                   }
                   { !currentUser &&
                     <Menu.Item key="login">
-                      <Link to="/login">Login</Link>
+                      <Link to={{
+                            pathname: "/login",
+                            search: "",
+                            hash: "",
+                            state: { referrer: currentLocation }
+                          }}>Login</Link>
                     </Menu.Item>
                   }
             </Menu>

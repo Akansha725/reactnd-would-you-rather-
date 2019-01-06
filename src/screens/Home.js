@@ -2,9 +2,9 @@ import React from 'react';
 import { Card } from 'antd';
 import { connect } from 'react-redux';
 import 'antd/dist/antd.css';
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
-import { loadQuestions, loadUsers } from '../actions';
+import { loadQuestions, loadUsers, loadUser } from '../actions';
 
 import QuestionCard from '../components/QuestionCard';
 
@@ -72,10 +72,11 @@ class Home extends React.Component {
 
   render() {
     let { key, tabList, contentList, dataFiltering, isLoading } = this.state;
+    let { currentUser } = this.props;
 
     return (
         <div>
-         { isLoading &&
+         { isLoading && currentUser !== null &&
             <Card
             style={{ width: '70%', margin: 80 }}
             tabList={tabList}
@@ -93,6 +94,9 @@ class Home extends React.Component {
             }
           </Card>
           }
+          { isLoading && currentUser === null &&
+            <Redirect to="/login" />
+          }
         </div>
     );
   }
@@ -101,14 +105,16 @@ class Home extends React.Component {
 const mapStateToProps = state => {
   return {
     users: state.users,
-    questions: state.questions
+    questions: state.questions,
+    currentUser: state.currentUser
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     getQuestions: () => dispatch(loadQuestions()),
-    getUsers: () => dispatch(loadUsers())
+    getUsers: () => dispatch(loadUsers()),
+    getCurrentUser: () => dispatch(loadUser())
   };
 };
 
