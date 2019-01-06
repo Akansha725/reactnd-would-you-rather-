@@ -2,7 +2,7 @@ import React from 'react';
 import 'antd/dist/antd.css';
 import { Card, Radio, Button, Avatar, Progress, Tag } from 'antd';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 import { loadQuestions, loadUsers, loadUser, saveAnswer } from '../actions';
 
@@ -96,9 +96,11 @@ class ShowPoll extends React.Component {
           showUserOptionB } = this.state
     let  userDeatil = users[question.author]
 
+    let { question_id } = this.props.match.params
+
     return (
       <div>
-       { isLoading &&
+       { isLoading && question_id !== 'invalid' &&
              <Card style={{ width: '70%', margin: 80 }} title= {userDeatil ? `${userDeatil.name} asks`: ''}
                headStyle={{backgroundColor: 'lightgray', flex: 1}}>
                  <Card.Grid style={{boxShadow: 'none', width: '30%'}}>
@@ -145,7 +147,10 @@ class ShowPoll extends React.Component {
                      }
                  </Card.Grid>
              </Card>
-       }
+        }
+        { question_id === 'invalid' &&
+          <Redirect to="/error" />
+        }
       </div>
     );
   }

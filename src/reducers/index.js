@@ -15,13 +15,9 @@ function currentUser(state = null, action) {
 }
 function questions(state = [], action) {
   switch (action.type) {
-    case GET_QUESTIONS:
-      return action.questions;
-    case SAVE_QUESTIONS:
-      return action.question;
-    case SAVE_QUESTIONS_ANSWERS:
-      return action.answers;
-
+    case GET_QUESTIONS: return action.questions;
+    case SAVE_QUESTIONS: return [ ...state, action.question]
+    case SAVE_QUESTIONS_ANSWERS: return [ ...state, action.question];
     default:
       return state;
   }
