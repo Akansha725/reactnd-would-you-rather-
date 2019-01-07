@@ -24,8 +24,7 @@ class UserLogin extends React.Component {
   }
 
   static getDerivedStateFromProps(props, state){
-
-      if(props.location.state && props.location.state.referrer === "logout"){
+      if(props.location.state && props.location.state.referrer === "/login"){
          props.setCurrentUser(null);
       }
       return null;
@@ -35,6 +34,8 @@ class UserLogin extends React.Component {
 
     let { users } = this.state;
     let { state } = this.props.location;
+    let { currentUser } = this.props;
+      
     return (
       <Card
         style={{ width: '70%', margin: 80, textAlign: 'center' }}
@@ -42,7 +43,10 @@ class UserLogin extends React.Component {
         title="Welcome to Would You Rather App!">
         <Card.Grid style={{width: '100%'}}>
             <Card.Meta style={{ textAlign: 'center', margin: 10}} title="Sign In" />
-             <Link to={state ? (state.referrer === '/login'? "/home": state.referrer): "/home"}>
+             <Link to={
+                  state ? ((state.referrer === '/login' && currentUser !== null)? "/home": state.referrer)
+                    : "/home"
+                }>
                 <Select
                     style={{ width: '100%', margin: 10}}
                     placeholder="Select a user"

@@ -12,7 +12,6 @@ class ShowPoll extends React.Component {
     users: {},
     isLoading: false,
     question: {},
-    currentUser: '',
     option: 0,
     isUserSame: false,
     optionAPercent: 0,
@@ -31,8 +30,7 @@ class ShowPoll extends React.Component {
     this.props.getUsers().then(response => {
       this.setState({
           users: response.users,
-          isLoading: true,
-          totalUsers: Object.keys(response.users).length
+          isLoading: true
          });
     });
   }
@@ -47,6 +45,7 @@ class ShowPoll extends React.Component {
 
             state.votesForOptionA = votesForOptionA;
             state.votesForOptionB = votesForOptionB;
+            state.totalUsers = votesForOptionA+votesForOptionB;
             state.optionAPercent = (votesForOptionA/state.totalUsers)*100;
             state.optionBPercent = (votesForOptionB/state.totalUsers)*100;
 

@@ -20,7 +20,7 @@ const store = createStore(rootReducer, applyMiddleware(logger, thunk))
 export default function App() {
       return (
             <Provider store={store}>
-                <Router>
+                <Router basename="/">
                   <Switch>
                     <Header>
                       <Route exact path="/login" component={UserLogin}/>

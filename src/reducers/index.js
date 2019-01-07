@@ -4,7 +4,7 @@ import { GET_USER, GET_QUESTIONS, GET_USERS, SAVE_USER, SAVE_QUESTIONS, SAVE_QUE
 function currentUser(state = null, action) {
   switch (action.type) {
     case GET_USER:
-      return action.currentUser;
+      return state;
 
     case SAVE_USER:
       return action.currentUser;
