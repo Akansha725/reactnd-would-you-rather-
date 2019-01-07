@@ -24,7 +24,7 @@ class UserLogin extends React.Component {
   }
 
   static getDerivedStateFromProps(props, state){
-      if(props.location.state && props.location.state.referrer === "/login"){
+      if(props.location.state && props.location.state.referrer === "logout"){
          props.setCurrentUser(null);
       }
       return null;
@@ -35,7 +35,7 @@ class UserLogin extends React.Component {
     let { users } = this.state;
     let { state } = this.props.location;
     let { currentUser } = this.props;
-      
+
     return (
       <Card
         style={{ width: '70%', margin: 80, textAlign: 'center' }}
